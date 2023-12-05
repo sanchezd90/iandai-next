@@ -44,10 +44,10 @@ const getExercises = async () => {
   // Trigger the data fetching when the component mounts or as needed
   fetchData();
 
-  return (
-    <div>
-      <h1>Main Menu</h1>     
-      <ExerciseButton/>   
-    </div>
+  return (    
+      <div>
+        <h1>Main Menu</h1>     
+        <ExerciseButton/>      
+      </div>    
   );
 };
