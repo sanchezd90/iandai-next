@@ -1,22 +1,23 @@
 // Header.jsx
 'use client'
 import React from 'react';
-import { Navbar, Container } from 'react-bootstrap';
+import { AppBar, Toolbar, Typography, Container, IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import { selectLanguages } from '@/lib/slices/languages/languagesSlice';
 import { useSelector } from '../../lib/store';
 
 // Import SVG flag icons
 
-
 export const Header = () => {
   const { selectedLanguage } = useSelector(selectLanguages);
 
   return (
-    <Navbar bg="light" expand="lg">
+    <AppBar position="static">
       <Container>
-        <Navbar.Brand>IAndAI</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            IAndAI
+          </Typography>
           <div className="d-flex align-items-center">
             {selectedLanguage && (
               <>
@@ -31,8 +32,8 @@ export const Header = () => {
               </>
             )}
           </div>
-        </Navbar.Collapse>
+        </Toolbar>
       </Container>
-    </Navbar>
+    </AppBar>
   );
 };

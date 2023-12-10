@@ -1,13 +1,12 @@
-// Home.jsx
 import React from 'react';
 import { ExerciseGrid } from './ExerciseGrid';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import the Bootstrap CSS
+import {Box} from '@mui/material';
 
 export default function Home() {
   return (
-    <div className="container mt-5">
-      <h1>Main Menu</h1>
+    <Box marginTop={5}>
+      <h1>IAndAI</h1>
       <ExerciseGrid />
-    </div>
+    </Box>
   );
 }

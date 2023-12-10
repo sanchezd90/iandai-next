@@ -1,7 +1,7 @@
 // ExerciseGrid.jsx
 'use client'
 import React, { useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Grid, Button, Card, CardContent, Typography } from '@mui/material';
 import {
   getExerciseList,
   selectExercises,
@@ -26,22 +26,22 @@ export const ExerciseGrid = () => {
 
   return (
     <section>
-      <Row className="mb-3">
+      <Grid container spacing={3} alignItems="center" justifyContent="center" className="mb-3">
         {languages.map((language) => (
-          <Col key={language._id}>
+          <Grid item key={language._id}>
             <LanguageButton language={language} />
-          </Col>
+          </Grid>
         ))}
-      </Row>
+      </Grid>
 
       {selectedLanguage && (
-        <Row xs={1} md={2} lg={3} className="g-4">
+        <Grid container spacing={3}>
           {exercises.map((exercise) => (
-            <Col key={exercise._id}>
-              <ExerciseCard exercise={exercise}/>
-            </Col>
+            <Grid item key={exercise._id} xs={12} md={6} lg={4}>
+              <ExerciseCard exercise={exercise} />
+            </Grid>
           ))}
-        </Row>
+        </Grid>
       )}
     </section>
   );
