@@ -9,7 +9,7 @@ export const LanguageButton = ({language}:{language:Language}) => {
       dispatch(updateSelectedLanguage(language))
     };
     return (
-        <button type="button" style={{fontWeight:selectedLanguage===language?600:400}} onClick={handleLanguageSelect}>
+        <button type="button" style={{fontWeight:selectedLanguage?._id===language._id?600:400}} onClick={handleLanguageSelect}>
           {language.name}
         </button>
       )
