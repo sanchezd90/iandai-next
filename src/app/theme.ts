@@ -6,7 +6,7 @@ import { palette } from '@/theme/contants';
 const theme = createTheme({
     palette:{
         primary:{
-            main: palette?.oreoBlue
+            main: palette?.dark
         }
     },
     typography:{
@@ -24,7 +24,21 @@ const theme = createTheme({
           laptop: 770,
           desktop: 1025,
         },
-      },    
+      },
+      components: {
+        MuiButton: {
+          styleOverrides: {
+            root: {
+              color: 'black',
+              backgroundColor: 'transparent',
+              outline:'2px solid black',              
+              fontWeight:700,              
+              borderRadius: 10,
+              padding:'8px 24px' 
+            },
+          },
+        },
+      },
 });
 
 declare module '@mui/material/styles' {

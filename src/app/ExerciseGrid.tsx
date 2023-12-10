@@ -14,6 +14,7 @@ import {
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import { useRouter } from 'next/navigation';
+import SectionTitle from './SectionTitle';
 
 export const ExerciseGrid = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export const ExerciseGrid = () => {
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
   height: 200,
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('mobile')]: {
     width: '100% !important', // Overrides inline-style
     height: 100,
   },
@@ -98,15 +99,14 @@ const handleClick = (id:string) => {
 
   return (
     <section>
-      <Typography variant='h4'>Brief Discussions</Typography>     
-      <Typography variant='subtitle1'>IAndAI will ask you an open question about a topic you choose. Then it will give you feedback on your answer</Typography>           
+      <SectionTitle title='Brief Discussion' description='IAndAI will ask you an open question about a topic you choose. Then it will give you feedback on your answer'/>      
       <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
       {selectedLanguage && exercises.map((exercise) => (
         <ImageButton
           focusRipple
           key={exercise._id}
           style={{
-            width: '33%',
+            width: '33.33%',
           }}
           onClick={()=>handleClick(exercise._id)}
         >
