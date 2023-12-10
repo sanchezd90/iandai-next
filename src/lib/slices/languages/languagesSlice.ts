@@ -6,14 +6,16 @@ import axios from 'axios'
 export interface Language {  
     _id:string,
     name:string,   
-    code:string 
+    code:string,
+    __v:number 
 }
 
 export interface LanguageState {
     languages: {
     _id:string,
     name:string, 
-    code:string
+    code:string,
+    __v:number 
   }[],
   selectedLanguage: Language | undefined
 }
@@ -21,7 +23,12 @@ export interface LanguageState {
 // Define the initial state using that type
 const initialState: LanguageState = {
   languages: [],
-  selectedLanguage: undefined
+  selectedLanguage: {
+    "_id": "656cdcaf8cba1818ac07f401",
+    "name": "German",
+    "__v": 0,
+    "code": "DE"
+}
 }
 
 export const languageSlice = createSlice({

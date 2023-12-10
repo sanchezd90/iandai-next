@@ -76,7 +76,7 @@ export default function Exercise({params}:{params:{exerciseId:string}}){
 
   const parsePrompt = () => {
     let prompt = exercise?.systemPrompt
-    .replace('chosen_language',selectedLanguage?.name??'English')    
+    .replaceAll('chosen_language',selectedLanguage?.name??'English')    
     .replace('chosen_trigger',trigger)
     return prompt
   }

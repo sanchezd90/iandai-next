@@ -1,12 +1,13 @@
 import React from 'react';
 import { ExerciseGrid } from './ExerciseGrid';
-import {Box} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 
 export default function Home() {
   return (
-    <Box marginTop={5}>
-      <h1>IAndAI</h1>
-      <ExerciseGrid />
+    <Box marginTop={5}>           
+      <Box marginY={15}>
+        <ExerciseGrid />
+      </Box>
     </Box>
   );
 }

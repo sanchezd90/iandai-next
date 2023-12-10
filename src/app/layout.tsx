@@ -4,6 +4,8 @@ import './globals.css';
 import { Providers } from '@/lib/provider';
 import { Header } from './header/Header';
 import CssBaseline from '@mui/material/CssBaseline'; // Import CssBaseline from Material-UI
+import { Box } from '@mui/material';
+import {roboto} from '@/fonts'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,11 +21,13 @@ export default function RootLayout({
 }) {
   return (
     <Providers>
-      <html lang="en">
+      <html lang="en" className={roboto.className}>
         <body className={inter.className}>
           <CssBaseline /> {/* Add CssBaseline for baseline styling */}
           <Header />
-          {children}
+          <Box paddingX='24px' marginX='120px'>
+            {children}
+          </Box>
         </body>
       </html>
     </Providers>
