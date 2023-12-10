@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from '../../src/lib/store';
 export const ExerciseGrid = () => {
 
 const dispatch = useDispatch()
-const exercises = useSelector(selectExercises)
+const {exercises} = useSelector(selectExercises)
 
 useEffect(() => {
   dispatch(getExerciseList())

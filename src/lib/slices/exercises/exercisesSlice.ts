@@ -25,8 +25,7 @@ const initialState: ExercisesState = {
 }
 
 export const exerciseSlice = createSlice({
-  name: 'exercises',
-  // `createSlice` will infer the state type from the `initialState` argument
+  name: 'exercises',  
   initialState,
   reducers: {
     updateExerciseList: (state, action: PayloadAction<Array<Exercise>>) => {
@@ -38,7 +37,7 @@ export const exerciseSlice = createSlice({
 export const { updateExerciseList } = exerciseSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectExercises = (state: RootState) => state.exercises.exercises
+export const selectExercises = (state: RootState) => state.exercises
 
 export default exerciseSlice.reducer
 
