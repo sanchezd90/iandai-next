@@ -1,8 +1,6 @@
 import React from 'react';
 import { ExerciseGrid } from '../ExerciseGrid';
-import {Box, Typography} from '@mui/material';
-import Image from 'next/image';
-
+import {Box} from '@mui/material';
 
 export default function Desk() {
   return (

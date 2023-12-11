@@ -99,7 +99,7 @@ const handleClick = (id:string) => {
 
   return (
     <section>
-      <SectionTitle title='Brief Discussion' description='IAndAI will ask you an open question about a topic you choose. Then it will give you feedback on your answer'/>      
+      <SectionTitle title='Brief Discussions' description='IAndAI will ask you an open question about a topic you choose. Then it will give you feedback on your answer'/>      
       <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
       {selectedLanguage && exercises.map((exercise) => (
         <ImageButton

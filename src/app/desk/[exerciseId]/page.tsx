@@ -155,6 +155,8 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                   value={userReply}
                   onChange={(e) => setUserReply(e.target.value)}
                   style={{marginTop:10,marginBottom:20, width:'400px'}}
+                  multiline
+                  minRows={6}                  
                 />
                 <Box display='flex' gap={2}>
                 <Button variant="outlined" onClick={handleUserReply} disabled={!userReply}>

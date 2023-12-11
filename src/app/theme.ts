@@ -34,7 +34,11 @@ const theme = createTheme({
               outline:'2px solid black',              
               fontWeight:700,              
               borderRadius: 10,
-              padding:'8px 24px' 
+              padding:'8px 24px',
+              '&:disabled': {                
+                outline:'2px solid #A3A3A3',
+                color:'#A3A3A3' 
+              }
             },
           },
         },
