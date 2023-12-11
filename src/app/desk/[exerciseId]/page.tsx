@@ -129,7 +129,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                 onChange={(e) => setTrigger(e.target.value)}
                 style={{marginTop:10,marginBottom:20, width:'400px'}}
               />
-              <Button variant="outlined" color="primary" onClick={submitAnswer}>
+              <Button variant="outlined" color="primary" onClick={submitAnswer} disabled={loadingAnswer}>
                 {loadingAnswer ? <CircularProgress size={20} color="inherit" /> : 'Continue'}
               </Button>
             </Box>}
@@ -159,10 +159,10 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                   minRows={6}                  
                 />
                 <Box display='flex' gap={2}>
-                <Button variant="outlined" onClick={handleUserReply} disabled={!userReply}>
+                <Button variant="outlined" onClick={handleUserReply} disabled={!userReply || loadingReply}>
                   {loadingReply ? <CircularProgress size={20} color="inherit" /> : 'Submit Reply'}
                 </Button>
-                  <Button variant="outlined" onClick={handleRestart}>Restart</Button>
+                  <Button variant="outlined" onClick={handleRestart} disabled={loadingReply}>Restart</Button>
                 </Box>
               </Box>
             )}
