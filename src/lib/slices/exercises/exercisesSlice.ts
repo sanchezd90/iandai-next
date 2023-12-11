@@ -44,7 +44,7 @@ export default exerciseSlice.reducer
 export function getExerciseList() {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get('http://localhost:3001/api/exercises');
+      const response = await axios.get(`${process.env.API_BASE_URL}/api/exercises`);
       dispatch(updateExerciseList(response.data))
     } catch (error) {
       console.error('Error fetching exercises:', error);

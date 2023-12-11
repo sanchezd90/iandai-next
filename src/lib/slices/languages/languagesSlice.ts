@@ -54,7 +54,7 @@ export default languageSlice.reducer
 export function getLanguageList() {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get('http://localhost:3001/api/languages');
+      const response = await axios.get(`${process.env.API_BASE_URL}/api/languages`);
       dispatch(updateLanguageList(response.data))
     } catch (error) {
       console.error('Error fetching languages:', error);

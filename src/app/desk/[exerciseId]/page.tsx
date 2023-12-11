@@ -57,7 +57,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
       setLoadingAnswer(true); 
 
       const payload = { systemMessageContent: parsePrompt(), userId: '656cdd233b84c3190e8f5cf6', exerciseId: params.exerciseId, languageId: selectedLanguage?._id };
-      const response = await apiCall('http://localhost:3001/api/openai', 'POST', payload);
+      const response = await apiCall(`${process.env.API_BASE_URL}/api/openai`, 'POST', payload);
       
       if (response) {
         setStoredResponse(response);
@@ -79,7 +79,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
         messages: [...storedResponse.messages, { role: 'user', content: userReply }]
       };
 
-      const response = await apiCall(`http://localhost:3001/api/openai/${storedResponse._id}`, 'PUT', payload);
+      const response = await apiCall(`${process.env.API_BASE_URL}/api/openai/${storedResponse._id}`, 'PUT', payload);
 
       if (response) {
         setStoredResponse(response);

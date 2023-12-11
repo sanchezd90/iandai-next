@@ -1,10 +1,10 @@
 import React from 'react';
-import {Box, Button, Typography} from '@mui/material';
+import {Box,Typography} from '@mui/material';
 import Image from 'next/image';
 import { StartButton } from './StartButton';
 
 
-export default function Home() {
+export default function Home() {  
   return (
     <Box marginTop={6}>
       <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
