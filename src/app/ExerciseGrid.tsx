@@ -15,8 +15,12 @@ import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import { useRouter } from 'next/navigation';
 import SectionTitle from './SectionTitle';
-import Food from 'public/images/buttons/food.jpg'
-import Image from 'next/image';
+import food from 'public/images/buttons/food.jpg'
+import artist from 'public/images/buttons/artist.jpg'
+import book from 'public/images/buttons/book.jpg'
+import city from 'public/images/buttons/city.jpg'
+import movie from 'public/images/buttons/movie.jpg'
+import political_subject from 'public/images/buttons/political_subject.jpg'
 
 export const ExerciseGrid = () => {
   const dispatch = useDispatch();
@@ -24,9 +28,19 @@ export const ExerciseGrid = () => {
   const { exercises } = useSelector(selectExercises);
   const { selectedLanguage } = useSelector(selectLanguages);
 
+  const images = {
+    "Food":food,
+    "Artist":artist,
+    "Book":book,
+    "City":city,
+    "Movie":movie,
+    "Political Subject":political_subject
+  } as any
+
   useEffect(() => {
     dispatch(getExerciseList());
     dispatch(getLanguageList());
+    console.log(images);
   }, [dispatch]);
 
 
@@ -101,8 +115,7 @@ const handleClick = (id:string) => {
 
   return (
     <section>
-      <SectionTitle title='Brief Discussions' description='IAndAI will ask you an open question about a topic you choose. Then it will give you feedback on your answer'/>      
-      <Image src={Food} alt=''/>
+      <SectionTitle title='Brief Discussions' description='IAndAI will ask you an open question about a topic you choose. Then it will give you feedback on your answer'/>            
       <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
       {selectedLanguage && exercises.map((exercise) => (
         <ImageButton
@@ -113,7 +126,7 @@ const handleClick = (id:string) => {
           }}
           onClick={()=>handleClick(exercise._id)}
         >
-          <ImageSrc style={{ backgroundImage: `url(/images/buttons/${exercise.name.replace(' ','_')}.jpg)`}} />
+          <ImageSrc style={{ backgroundImage: `url(${images[exercise.name]?.src})`}} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
           <ImageX>
             <Typography
