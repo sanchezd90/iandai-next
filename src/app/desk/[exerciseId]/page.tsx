@@ -134,7 +134,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
               </Button>
             </Box>}
 
-            {storedResponse &&
+            {storedResponse?.messages &&
               storedResponse.messages.filter(m => m.role !== 'system').map((message: any) => {
                 return (
                   <Box key={message._id} display={'flex'} flexDirection={'column'} marginY={4}>

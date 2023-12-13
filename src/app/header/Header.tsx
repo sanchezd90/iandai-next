@@ -24,8 +24,8 @@ export const Header = () => {
           <Box style={{cursor:'pointer'}} onClick={()=>router.push('/desk')}>
             <Image src='/logo-words.svg' alt='logo' width={100} height={25}/>
           </Box>
-          <Box style={{marginLeft: 'auto'}} display={'flex'} alignItems={'center'}>
-            <Typography variant='h6'>{selectedLanguage?.name}</Typography>
+          <Box style={{marginLeft: 'auto'}} display={'flex'} alignItems={'center'} zIndex={2}>
+            <Typography variant='h6'>Practice: {selectedLanguage?.name}</Typography>
             <LanguageSelect/>
           </Box>          
         </Toolbar>
