@@ -15,6 +15,8 @@ import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import { useRouter } from 'next/navigation';
 import SectionTitle from './SectionTitle';
+import Food from 'public/images/buttons/food.jpg'
+import Image from 'next/image';
 
 export const ExerciseGrid = () => {
   const dispatch = useDispatch();
@@ -60,7 +62,7 @@ const ImageSrc = styled('span')({
   backgroundPosition: 'center 40%',
 });
 
-const Image = styled('span')(({ theme }) => ({
+const ImageX = styled('span')(({ theme }) => ({
   position: 'absolute',
   left: 0,
   right: 0,
@@ -100,6 +102,7 @@ const handleClick = (id:string) => {
   return (
     <section>
       <SectionTitle title='Brief Discussions' description='IAndAI will ask you an open question about a topic you choose. Then it will give you feedback on your answer'/>      
+      <Image src={Food} alt=''/>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
       {selectedLanguage && exercises.map((exercise) => (
         <ImageButton
@@ -112,7 +115,7 @@ const handleClick = (id:string) => {
         >
           <ImageSrc style={{ backgroundImage: `url(/images/buttons/${exercise.name.replace(' ','_')}.jpg)`}} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
-          <Image>
+          <ImageX>
             <Typography
               component="span"
               variant="subtitle1"
@@ -127,7 +130,7 @@ const handleClick = (id:string) => {
               {exercise.name}
               <ImageMarked className="MuiImageMarked-root" />
             </Typography>
-          </Image>
+          </ImageX>
         </ImageButton>
       ))}
     </Box>
