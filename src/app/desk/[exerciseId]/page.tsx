@@ -38,6 +38,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   const [userReply, setUserReply] = useState<string>('');
   const [loadingAnswer, setLoadingAnswer] = useState<boolean>(false);
   const [loadingReply, setLoadingReply] = useState<boolean>(false);
+  const [showError,setShowError] = useState(false)
 
   const getExerciseFromStore = () => {
     const selection = exercises.find(ex => ex._id === params.exerciseId);
@@ -59,11 +60,16 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
       const payload = { systemMessageContent: parsePrompt(), userId: '656cdd233b84c3190e8f5cf6', exerciseId: params.exerciseId, languageId: selectedLanguage?._id };
       const response = await apiCall(`${process.env.API_BASE_URL}/api/openai`, 'POST', payload);
       
-      if (response) {
-        setStoredResponse(response);
+      if (response) {             
+        if(response.error){
+          setShowError(true)
+        }else{
+          setStoredResponse(response);
+          setShowError(false)
+        }
       }
     } catch (error) {
-      console.error(error);
+      console.error(error);      
     } finally {
       setLoadingAnswer(false); 
     }
@@ -129,8 +135,9 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                 onChange={(e) => setTrigger(e.target.value)}
                 style={{marginTop:10,marginBottom:20, width:'400px'}}
               />
+              {showError && <Typography marginY={2}>Sorry! <span style={{fontWeight:600}}>IAndAI</span> has had a rough day and failed to generate a proper response.</Typography>}
               <Button variant="outlined" color="primary" onClick={submitAnswer} disabled={loadingAnswer}>
-                {loadingAnswer ? <CircularProgress size={20} color="inherit" /> : 'Continue'}
+                {loadingAnswer ? <CircularProgress size={20} color="inherit" /> : showError?'Try again':'Continue'}
               </Button>
             </Box>}
 
@@ -166,7 +173,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                 </Box>
               </Box>
             )}
-            {storedResponse?.messages.length ===4 && <Box display={'flex'} justifyContent={'center'}>
+            {storedResponse?.messages && storedResponse?.messages.length ===4 && <Box display={'flex'} justifyContent={'center'}>
               <Button variant="outlined" onClick={handleRestart}>Restart</Button>        
             </Box>}
           </>          

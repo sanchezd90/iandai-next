@@ -39,8 +39,7 @@ export const ExerciseGrid = () => {
 
   useEffect(() => {
     dispatch(getExerciseList());
-    dispatch(getLanguageList());
-    console.log(images);
+    dispatch(getLanguageList());    
   }, [dispatch]);
 
 
