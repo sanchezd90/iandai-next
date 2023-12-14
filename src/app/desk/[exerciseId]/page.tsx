@@ -81,7 +81,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
     try {
       setLoadingReply(true); // Set loading state to true while submitting reply      
       const payload = {
-        messages: [...storedThread.messages, { role: 'user', content: exercise?.responseTemplate.replace('{usersAnswer}',userReply).replace('target_language',selectedLanguage?.name as string) }]
+        messages: [...storedThread.messages, { role: 'user', content: exercise?.responseTemplate.replace('{usersAnswer}',userReply).replace('chosen_language',selectedLanguage?.name as string) }]
       };
 
       const response = await apiCall(`${process.env.API_BASE_URL}/api/openai/${storedThread._id}`, 'PUT', payload);
