@@ -8,6 +8,7 @@ import apiCall from "@/services/apiService";
 import { useRouter } from 'next/navigation';
 import { BackButton } from "./BackButton";
 import CircularProgress from '@mui/material/CircularProgress';
+import { splitStringByNumberDot } from "@/utils/desk/common";
 
 
 type ApiResponseType = {
@@ -34,9 +35,9 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   const { exercises } = useSelector(selectExercises);
   const { selectedLanguage } = useSelector(selectLanguages);
   const [trigger, setTrigger] = useState<string>('');
-  const [storedResponse, setStoredResponse] = useState<ApiResponseType>();
+  const [storedThread, setStoredThread] = useState<ApiResponseType>();
   const [userReply, setUserReply] = useState<string>('');
-  const [loadingAnswer, setLoadingAnswer] = useState<boolean>(false);
+  const [loadingQuestion, setLoadingQuestion] = useState<boolean>(false);
   const [loadingReply, setLoadingReply] = useState<boolean>(false);
   const [showError,setShowError] = useState(false)
 
@@ -53,9 +54,9 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
     getExerciseFromStore();
   }, [params, exercises]);
 
-  const submitAnswer = async () => {
+  const submitTrigger = async () => {
     try {
-      setLoadingAnswer(true); 
+      setLoadingQuestion(true); 
 
       const payload = { systemMessageContent: parsePrompt(), userId: '656cdd233b84c3190e8f5cf6', exerciseId: params.exerciseId, languageId: selectedLanguage?._id };
       const response = await apiCall(`${process.env.API_BASE_URL}/api/openai`, 'POST', payload);
@@ -64,31 +65,29 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
         if(response.error){
           setShowError(true)
         }else{
-          setStoredResponse(response);
+          setStoredThread(response);
           setShowError(false)
         }
       }
     } catch (error) {
       console.error(error);      
     } finally {
-      setLoadingAnswer(false); 
+      setLoadingQuestion(false); 
     }
   };
 
   const handleUserReply = async () => {
-    if (!storedResponse) return;
-
+    if (!storedThread) return;         
     try {
-      setLoadingReply(true); // Set loading state to true while submitting reply
-
+      setLoadingReply(true); // Set loading state to true while submitting reply      
       const payload = {
-        messages: [...storedResponse.messages, { role: 'user', content: userReply }]
+        messages: [...storedThread.messages, { role: 'user', content: exercise?.responseTemplate.replace('{usersAnswer}',userReply).replace('target_language',selectedLanguage?.name as string) }]
       };
 
-      const response = await apiCall(`${process.env.API_BASE_URL}/api/openai/${storedResponse._id}`, 'PUT', payload);
+      const response = await apiCall(`${process.env.API_BASE_URL}/api/openai/${storedThread._id}`, 'PUT', payload);
 
       if (response) {
-        setStoredResponse(response);
+        setStoredThread(response);
         setUserReply('');
       }
     } catch (error) {
@@ -107,7 +106,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
 
   const handleRestart = () => {
     setTrigger('');
-    setStoredResponse(undefined);
+    setStoredThread(undefined);
   };
 
   const titleFrameStyle = {
@@ -115,6 +114,18 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
     padding: '10px',
     margin: '20px auto',
   };
+
+  const parseResponse = (response:string,role:string) => {
+    if(role==='assistant') {
+      return (<>
+      {splitStringByNumberDot(response).map(line=>{
+        return <Typography textAlign={'start'} marginBottom={2}>{line}</Typography>
+      })}
+      </>)
+      
+    }
+    return <Typography textAlign={'end'}>{response.split('`')[1]}</Typography>
+  }
 
   return (
     <div>
@@ -125,7 +136,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
         </Box>
         {(
           <>
-            {!storedResponse && <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5}>              
+            {!storedThread && <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5}>              
               <label htmlFor="trigger">
                 <Typography variant='h6'>Which {exercise.name.toLowerCase()} do you want to talk about?</Typography>
                 </label>
@@ -136,23 +147,23 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                 style={{marginTop:10,marginBottom:20, width:'400px'}}
               />
               {showError && <Typography marginY={2}>Sorry! <span style={{fontWeight:600}}>IAndAI</span> has had a rough day and failed to generate a proper response.</Typography>}
-              <Button variant="outlined" color="primary" onClick={submitAnswer} disabled={loadingAnswer}>
-                {loadingAnswer ? <CircularProgress size={20} color="inherit" /> : showError?'Try again':'Continue'}
+              <Button variant="outlined" color="primary" onClick={submitTrigger} disabled={loadingQuestion}>
+                {loadingQuestion ? <CircularProgress size={20} color="inherit" /> : showError?'Try again':'Continue'}
               </Button>
             </Box>}
 
-            {storedResponse?.messages &&
-              storedResponse.messages.filter(m => m.role !== 'system').map((message: any) => {
+            {storedThread?.messages &&
+              storedThread.messages.filter(m => m.role !== 'system').map((message: any) => {
                 return (
                   <Box key={message._id} display={'flex'} flexDirection={'column'} marginY={4}>
                     <Typography variant="h6" style={{ fontWeight: 600 }} textAlign={message.role === 'assistant'?'start':'end'}>{message.role === 'assistant' ? 'IAndAI' : 'You'}</Typography>
-                    <Typography textAlign={message.role === 'assistant'?'start':'end'}>{message.content}</Typography>
+                    {parseResponse(message.content,message.role)}                    
                   </Box>
                 );
               })}
 
             {/* Display user input box only if there is a second message */}
-            {storedResponse?.messages && storedResponse?.messages.length > 1 && storedResponse?.messages.length < 4 && (
+            {storedThread?.messages && storedThread?.messages.length > 1 && storedThread?.messages.length < 4 && (
               <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5}>              
                 <label htmlFor="userReply">
                 <Typography variant='h6'>Reply to <span style={{fontWeight:600}}>IAndAI</span></Typography>
@@ -173,7 +184,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                 </Box>
               </Box>
             )}
-            {storedResponse?.messages && storedResponse?.messages.length ===4 && <Box display={'flex'} justifyContent={'center'}>
+            {storedThread?.messages && storedThread?.messages.length ===4 && <Box display={'flex'} justifyContent={'center'}>
               <Button variant="outlined" onClick={handleRestart}>Restart</Button>        
             </Box>}
           </>          

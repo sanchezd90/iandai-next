@@ -7,7 +7,8 @@ export interface Exercise {
     _id:string,
     name:string,
     systemPrompt:string,
-    instructions:string
+    instructions:string,
+    responseTemplate:string
 }
 
 export interface ExercisesState {
@@ -15,7 +16,8 @@ export interface ExercisesState {
     _id:string,
     name:string,
     systemPrompt:string,
-    instructions:string
+    instructions:string,
+    responseTemplate:string
   }[]
 }
 
