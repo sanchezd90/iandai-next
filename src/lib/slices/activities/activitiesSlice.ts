@@ -19,13 +19,15 @@ export interface Exercise {
 
 export interface ActivitiesState {
   activities: Activity[],
-  activeExercise: Exercise | null
+  activeExercise: Exercise | null,
+  loading: boolean
 }
 
 // Define the initial state using that type
 const initialState: ActivitiesState = {
   activities: [],
-  activeExercise: null
+  activeExercise: null,
+  loading: false
 }
 
 export const activitySlice = createSlice({
@@ -34,14 +36,19 @@ export const activitySlice = createSlice({
   reducers: {
     updateActivityList: (state, action: PayloadAction<Array<Activity>>) => {
         state.activities = action.payload
+        state.loading = false
     },   
     updateActiveExercise: (state, action: PayloadAction<Exercise>) => {
         state.activeExercise = action.payload
+        state.loading = false
+    },   
+    updateLoading: (state, action: PayloadAction<boolean>) => {
+        state.loading = action.payload
     },   
   }
 })
 
-export const { updateActivityList, updateActiveExercise } = activitySlice.actions
+export const { updateActivityList, updateActiveExercise, updateLoading } = activitySlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectActivities = (state: RootState) => state.activities
@@ -51,9 +58,12 @@ export default activitySlice.reducer
 export function getActivityList() {
   return async (dispatch: Dispatch) => {
     try {
+      dispatch(updateLoading(true))
       const response = await axios.get(`${process.env.API_BASE_URL}/api/activities`);
       dispatch(updateActivityList(response.data))
+      dispatch(updateLoading(false))
     } catch (error) {
+      dispatch(updateLoading(false))
       console.error('Error fetching activities:', error);
       throw error; // Handle the error as needed
     }    
@@ -62,9 +72,11 @@ export function getActivityList() {
 export function getExercise(exerciseId:string) {
   return async (dispatch: Dispatch) => {
     try {
+      dispatch(updateLoading(true))
       const response = await axios.get(`${process.env.API_BASE_URL}/api/exercises/${exerciseId}`);
-      dispatch(updateActiveExercise(response.data))
+      dispatch(updateActiveExercise(response.data))      
     } catch (error) {
+      dispatch(updateLoading(false))
       console.error('Error fetching activities:', error);
       throw error; // Handle the error as needed
     }    

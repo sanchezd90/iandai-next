@@ -32,7 +32,7 @@ interface ExerciseParams {
 export default function Exercise({ params }: { params: ExerciseParams }) {
   const router = useRouter();  
   const dispatch = useDispatch()
-  const { activeExercise } = useSelector(selectActivities);
+  const { activeExercise, loading } = useSelector(selectActivities);
   const { selectedLanguage } = useSelector(selectLanguages);
   const [trigger, setTrigger] = useState<string>('');
   const [storedThread, setStoredThread] = useState<ApiResponseType>();
@@ -121,7 +121,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   return (
     <div>
       <BackButton/>
-      {activeExercise && <>
+      {!loading && activeExercise ? <>
         <Box style={titleFrameStyle}>
           <Typography variant="h4">{activeExercise.activity.name}: {activeExercise.name}</Typography>
         </Box>
@@ -180,7 +180,8 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
             </Box>}
           </>          
         )}
-      </>
+      </>:
+      <Box display='flex' justifyContent={'center'} marginTop={'20%'}><CircularProgress/></Box>
       }      
     </div>
   );
