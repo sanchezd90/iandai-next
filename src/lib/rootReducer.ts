@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
 // // slices
-import exercisesSliceReducer from './slices/exercises/exercisesSlice';
+import activitiesSliceReducer from './slices/activities/activitiesSlice';
 import languagesSliceReducer from './slices/languages/languagesSlice';
 
 // ----------------------------------------------------------------------
@@ -37,7 +37,7 @@ export const productPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-   exercises: exercisesSliceReducer,
+   activities: activitiesSliceReducer,
    languages: languagesSliceReducer,
 });
 

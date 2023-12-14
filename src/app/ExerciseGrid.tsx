@@ -1,15 +1,13 @@
 // ExerciseGrid.jsx
 'use client'
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Typography } from '@mui/material';
 import {
-  getExerciseList,
-  selectExercises,
-} from '@/lib/slices/exercises/exercisesSlice';
-import { useDispatch, useSelector } from '../../src/lib/store';
+  Activity,
+} from '@/lib/slices/activities/activitiesSlice';
+import { useSelector } from '../../src/lib/store';
 import {
-  selectLanguages,
-  getLanguageList,
+  selectLanguages  
 } from '@/lib/slices/languages/languagesSlice';
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
@@ -22,10 +20,8 @@ import city from 'public/images/buttons/city.jpg'
 import movie from 'public/images/buttons/movie.jpg'
 import political_subject from 'public/images/buttons/political_subject.jpg'
 
-export const ExerciseGrid = () => {
-  const dispatch = useDispatch();
-  const router = useRouter()
-  const { exercises } = useSelector(selectExercises);
+export const ExerciseGrid = ({activity}:{activity:Activity}) => {  
+  const router = useRouter()  
   const { selectedLanguage } = useSelector(selectLanguages);
 
   const images = {
@@ -36,12 +32,6 @@ export const ExerciseGrid = () => {
     "Movie":movie,
     "Political Subject":political_subject
   } as any
-
-  useEffect(() => {
-    dispatch(getExerciseList());
-    dispatch(getLanguageList());    
-  }, [dispatch]);
-
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
@@ -114,9 +104,9 @@ const handleClick = (id:string) => {
 
   return (
     <section>
-      <SectionTitle title='Brief Discussions' description='IAndAI will ask you an open question about a topic you choose. Then it will give you feedback on your answer'/>            
+      <SectionTitle title={activity.name} instructions={activity.instructions}/>            
       <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
-      {selectedLanguage && exercises.map((exercise) => (
+      {selectedLanguage && activity.exercises.map((exercise) => (
         <ImageButton
           focusRipple
           key={exercise._id}

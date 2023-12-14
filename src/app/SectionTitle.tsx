@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 
-const SectionTitle = ({ title, description }:{title:string,description:string}) => {
+const SectionTitle = ({ title, instructions }:{title:string,instructions:string}) => {
   const sectionTitleContainerStyle = {
     textAlign: 'center',
   };
@@ -27,7 +27,7 @@ const SectionTitle = ({ title, description }:{title:string,description:string}) 
       <Box display={'flex'} gap={1}>
         <Image src='/logo-solid.svg' alt='logo' width={25} height={22}/>       
         <Typography variant="body1" style={descriptionStyle}>
-            {description}
+            {instructions}
         </Typography>
       </Box>
     </Box>
@@ -36,7 +36,7 @@ const SectionTitle = ({ title, description }:{title:string,description:string}) 
 
 SectionTitle.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  instructions: PropTypes.string.isRequired,
 };
 
 export default SectionTitle;

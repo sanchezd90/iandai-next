@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import { Box, Button, TextField, Typography } from '@mui/material';
-import { useSelector } from "@/lib/store";
-import { selectExercises, Exercise as ExerciseType } from "@/lib/slices/exercises/exercisesSlice";
+import { useDispatch, useSelector } from "@/lib/store";
+import { Exercise as ExerciseType, selectActivities, getExercise } from "@/lib/slices/activities/activitiesSlice";
 import { selectLanguages } from "@/lib/slices/languages/languagesSlice";
 import apiCall from "@/services/apiService";
 import { useRouter } from 'next/navigation';
@@ -30,29 +30,20 @@ interface ExerciseParams {
 }
 
 export default function Exercise({ params }: { params: ExerciseParams }) {
-  const router = useRouter();
-  const [exercise, setExercise] = useState<ExerciseType>();
-  const { exercises } = useSelector(selectExercises);
+  const router = useRouter();  
+  const dispatch = useDispatch()
+  const { activeExercise } = useSelector(selectActivities);
   const { selectedLanguage } = useSelector(selectLanguages);
   const [trigger, setTrigger] = useState<string>('');
   const [storedThread, setStoredThread] = useState<ApiResponseType>();
-  const [userReply, setUserReply] = useState<string>('');
+  const [userReply, setUserReply] = useState<string>('');  
   const [loadingQuestion, setLoadingQuestion] = useState<boolean>(false);
   const [loadingReply, setLoadingReply] = useState<boolean>(false);
   const [showError,setShowError] = useState(false)
 
-  const getExerciseFromStore = () => {
-    const selection = exercises.find(ex => ex._id === params.exerciseId);
-    if (selection) {
-      setExercise(selection);
-    } else {
-      router.push('/desk');
-    }
-  };
-
   useEffect(() => {
-    getExerciseFromStore();
-  }, [params, exercises]);
+    dispatch(getExercise(params.exerciseId))
+  }, []);
 
   const submitTrigger = async () => {
     try {
@@ -81,7 +72,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
     try {
       setLoadingReply(true); // Set loading state to true while submitting reply      
       const payload = {
-        messages: [...storedThread.messages, { role: 'user', content: exercise?.responseTemplate.replace('{usersAnswer}',userReply).replace('chosen_language',selectedLanguage?.name as string) }]
+        messages: [...storedThread.messages, { role: 'user', content: activeExercise?.activity.responseTemplate.replace('{usersAnswer}',userReply).replace('chosen_language',selectedLanguage?.name as string) }]
       };
 
       const response = await apiCall(`${process.env.API_BASE_URL}/api/openai/${storedThread._id}`, 'PUT', payload);
@@ -98,7 +89,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   };
 
   const parsePrompt = () => {
-    let prompt = exercise?.systemPrompt
+    let prompt = activeExercise?.systemPrompt
       .replaceAll('chosen_language', selectedLanguage?.name ?? 'English')
       .replace('chosen_trigger', trigger);
     return prompt;
@@ -130,15 +121,15 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   return (
     <div>
       <BackButton/>
-      {exercise && <>
+      {activeExercise && <>
         <Box style={titleFrameStyle}>
-          <Typography variant="h4">Brief Discussion: {exercise.name}</Typography>
+          <Typography variant="h4">{activeExercise.activity.name}: {activeExercise.name}</Typography>
         </Box>
         {(
           <>
             {!storedThread && <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5}>              
               <label htmlFor="trigger">
-                <Typography variant='h6'>Which {exercise.name.toLowerCase()} do you want to talk about?</Typography>
+                <Typography variant='h6'>Which {activeExercise.name.toLowerCase()} do you want to talk about?</Typography>
                 </label>
               <TextField
                 id="trigger"
