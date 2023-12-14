@@ -118,8 +118,8 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   const parseResponse = (response:string,role:string) => {
     if(role==='assistant') {
       return (<>
-      {splitStringByNumberDot(response).map(line=>{
-        return <Typography textAlign={'start'} marginBottom={2}>{line}</Typography>
+      {splitStringByNumberDot(response).map((line,index)=>{
+        return <Typography key={index} textAlign={'start'} marginBottom={2}>{line}</Typography>
       })}
       </>)
       
