@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { BackButton } from "./BackButton";
 import CircularProgress from '@mui/material/CircularProgress';
 import { splitStringByNumberDot } from "@/utils/desk/common";
+import { LoadingAnimation } from "@/app/components/loadingAnimation";
 
 
 type ApiResponseType = {
@@ -40,9 +41,13 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   const [loadingQuestion, setLoadingQuestion] = useState<boolean>(false);
   const [loadingReply, setLoadingReply] = useState<boolean>(false);
   const [showError,setShowError] = useState(false)
+  const [landing, setLanding] = useState(true)
 
   useEffect(() => {
     dispatch(getExercise(params.exerciseId))
+    setTimeout(()=>{
+      setLanding(false)
+    },2000)  
   }, []);
 
   const submitTrigger = async () => {
@@ -121,32 +126,35 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   return (
     <div>
       <BackButton/>
-      {!loading && activeExercise ? <>
+      {!loading && !landing && activeExercise ? <Box position='relative'>
         <Box style={titleFrameStyle}>
           <Typography variant="h4">{activeExercise.activity.name}: {activeExercise.name}</Typography>
         </Box>
         {(
           <>
-            {!storedThread && <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5}>              
-              <label htmlFor="trigger">
-                <Typography variant='h6'>Which {activeExercise.name.toLowerCase()} do you want to talk about?</Typography>
-                </label>
-              <TextField
-                id="trigger"
-                value={trigger}
-                onChange={(e) => setTrigger(e.target.value)}
-                style={{marginTop:10,marginBottom:20, width:'400px'}}
-              />
-              {showError && <Typography marginY={2}>Sorry! <span style={{fontWeight:600}}>IAndAI</span> has had a rough day and failed to generate a proper response.</Typography>}
-              <Button variant="outlined" color="primary" onClick={submitTrigger} disabled={loadingQuestion}>
-                {loadingQuestion ? <CircularProgress size={20} color="inherit" /> : showError?'Try again':'Continue'}
-              </Button>
-            </Box>}
+            {!storedThread && <Box>              
+              <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5} sx={{opacity:loadingQuestion?'0':'1',transition: 'opacity 0.5s ease-in, opacity 0.25s ease-out'}}>
+                <label htmlFor="trigger">
+                  <Typography variant='h6'>Which {activeExercise.name.toLowerCase()} do you want to talk about?</Typography>
+                  </label>
+                <TextField
+                  id="trigger"
+                  value={trigger}
+                  onChange={(e) => setTrigger(e.target.value)}
+                  style={{marginTop:10,marginBottom:20, width:'400px'}}
+                />
+                {showError && <Typography marginY={2}>Sorry! <span style={{fontWeight:600}}>IAndAI</span> has had a rough day and failed to generate a proper response.</Typography>}
+                <Button variant="outlined" color="primary" onClick={submitTrigger} disabled={loadingQuestion}>
+                  {showError?'Try again':'Continue'}
+                </Button>
+              </Box>              
+            </Box>            
+            }
 
             {storedThread?.messages &&
               storedThread.messages.filter(m => m.role !== 'system').map((message: any) => {
                 return (
-                  <Box key={message._id} display={'flex'} flexDirection={'column'} marginY={4}>
+                  <Box key={message._id} display={'flex'} flexDirection={'column'} marginY={4} sx={{opacity:loadingReply?'0':'1',transition: 'opacity 0.5s ease-in, opacity 0.25s ease-out'}}>
                     <Typography variant="h6" style={{ fontWeight: 600 }} textAlign={message.role === 'assistant'?'start':'end'}>{message.role === 'assistant' ? 'IAndAI' : 'You'}</Typography>
                     {parseResponse(message.content,message.role)}                    
                   </Box>
@@ -154,8 +162,8 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
               })}
 
             {/* Display user input box only if there is a second message */}
-            {storedThread?.messages && storedThread?.messages.length > 1 && storedThread?.messages.length < 4 && (
-              <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5}>              
+            {storedThread?.messages && storedThread?.messages.length > 1 && storedThread?.messages.length < 4 && !loadingReply && (
+              <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5} sx={{opacity:loadingQuestion?'0':'1',transition: 'opacity 0.5s ease-in, opacity 0.25s ease-out'}}>              
                 <label htmlFor="userReply">
                 <Typography variant='h6'>Reply to <span style={{fontWeight:600}}>IAndAI</span></Typography>
                 </label>
@@ -175,13 +183,14 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                 </Box>
               </Box>
             )}
-            {storedThread?.messages && storedThread?.messages.length ===4 && <Box display={'flex'} justifyContent={'center'}>
+            {storedThread?.messages && storedThread?.messages.length ===4 && <Box display={'flex'} justifyContent={'center'} marginBottom={4}>
               <Button variant="outlined" onClick={handleRestart}>Restart</Button>        
             </Box>}
           </>          
         )}
-      </>:
-      <Box display='flex' justifyContent={'center'} marginTop={'20%'}><CircularProgress/></Box>
+        <Box display='flex' position='absolute' left='42%' top='20vh' zIndex={-1} sx={{opacity:(loadingQuestion||loadingReply)?'1':'0',transition: 'opacity 0.5s ease-in, opacity 0.1s ease-out'}}><LoadingAnimation/></Box>
+      </Box>:
+      <Box display='flex' justifyContent={'center'} marginTop={'15%'}><LoadingAnimation/></Box>
       }      
     </div>
   );
