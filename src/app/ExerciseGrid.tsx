@@ -1,7 +1,7 @@
 // ExerciseGrid.jsx
 'use client'
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 import {
   Activity,
 } from '@/lib/slices/activities/activitiesSlice';
@@ -23,6 +23,8 @@ import political_subject from 'public/images/buttons/political_subject.jpg'
 export const ExerciseGrid = ({activity}:{activity:Activity}) => {  
   const router = useRouter()  
   const { selectedLanguage } = useSelector(selectLanguages);
+  const isSmallScreen = useMediaQuery((theme:any) => theme.breakpoints.down('tablet'));
+  const isExtraSmallScreen = useMediaQuery((theme:any) => theme.breakpoints.down('mobile'));
 
   const images = {
     "Food":food,
@@ -38,7 +40,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
   height: 200,
   [theme.breakpoints.down('mobile')]: {
     width: '100% !important', // Overrides inline-style
-    height: 100,
+    height: 200,
   },
   '&:hover, &.Mui-focusVisible': {
     zIndex: 1,
@@ -111,7 +113,7 @@ const handleClick = (id:string) => {
           focusRipple
           key={exercise._id}
           style={{
-            width: '33.33%',
+            width: isExtraSmallScreen?'100%':isSmallScreen?'50%':'33.33%',
           }}
           onClick={()=>handleClick(exercise._id)}
         >

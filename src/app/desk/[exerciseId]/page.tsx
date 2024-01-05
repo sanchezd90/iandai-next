@@ -10,6 +10,7 @@ import { BackButton } from "./BackButton";
 import CircularProgress from '@mui/material/CircularProgress';
 import { splitStringByNumberDot } from "@/utils/desk/common";
 import { LoadingAnimation } from "@/app/components/loadingAnimation";
+import useWindowSize from "@/hooks/useWindowSize";
 
 
 type ApiResponseType = {
@@ -42,6 +43,18 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   const [loadingReply, setLoadingReply] = useState<boolean>(false);
   const [showError,setShowError] = useState(false)
   const [landing, setLanding] = useState(true)
+  const {width} = useWindowSize()
+
+  const calculateCenter = () => {
+    // LoadingAnimation half width is 96px
+    // left margin and padding is 30px (mobile) and 144px (tablet/desktop)
+    if(!width) return 0
+    if(width<668){
+      return (width/2)-96-30
+    }else{
+      return (width/2)-96-144
+    }
+  }
 
   useEffect(() => {
     dispatch(getExercise(params.exerciseId))
@@ -188,7 +201,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
             </Box>}
           </>          
         )}
-        <Box display='flex' position='absolute' left='42%' top='20vh' zIndex={-1} sx={{opacity:(loadingQuestion||loadingReply)?'1':'0',transition: 'opacity 0.5s ease-in, opacity 0.1s ease-out'}}><LoadingAnimation/></Box>
+        <Box display='flex' position='absolute' left={calculateCenter()} top='20vh' zIndex={-1} sx={{opacity:(loadingQuestion||loadingReply)?'1':'0',transition: 'opacity 0.5s ease-in, opacity 0.1s ease-out'}}><LoadingAnimation/></Box>
       </Box>:
       <Box display='flex' justifyContent={'center'} marginTop={'15%'}><LoadingAnimation/></Box>
       }      

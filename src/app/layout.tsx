@@ -27,7 +27,7 @@ export default function RootLayout({
           <body className={inter.className}>
             <CssBaseline /> {/* Add CssBaseline for baseline styling */}
             <Header />
-            <Box paddingX='24px' marginX='120px'>
+            <Box className='container'>
               {children}
             </Box>
           </body>
