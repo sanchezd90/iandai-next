@@ -13,12 +13,22 @@ import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import { useRouter } from 'next/navigation';
 import SectionTitle from './SectionTitle';
-import food from 'public/images/buttons/food.jpg'
-import artist from 'public/images/buttons/artist.jpg'
-import book from 'public/images/buttons/book.jpg'
-import city from 'public/images/buttons/city.jpg'
-import movie from 'public/images/buttons/movie.jpg'
-import political_subject from 'public/images/buttons/political_subject.jpg'
+import food from 'public/images/buttons/food.jpg';
+import artist from 'public/images/buttons/artist.jpg';
+import book from 'public/images/buttons/book.jpg';
+import city from 'public/images/buttons/city.jpg';
+import movie from 'public/images/buttons/movie.jpg';
+import political_subject from 'public/images/buttons/political_subject.jpg';
+import errands from 'public/images/buttons/errands.jpg';
+import partner from 'public/images/buttons/partner.jpg';
+import friends from 'public/images/buttons/friends.jpg';
+import restaurant from 'public/images/buttons/restaurant.jpg';
+import dating from 'public/images/buttons/dating.jpg';
+import healthCare from 'public/images/buttons/health-care.jpg';
+import shopping from 'public/images/buttons/shopping.jpg';
+import domestic from 'public/images/buttons/domestic.jpg';
+import work from 'public/images/buttons/work.jpg';
+
 
 export const ExerciseGrid = ({activity}:{activity:Activity}) => {  
   const router = useRouter()  
@@ -27,13 +37,23 @@ export const ExerciseGrid = ({activity}:{activity:Activity}) => {
   const isExtraSmallScreen = useMediaQuery((theme:any) => theme.breakpoints.down('mobile'));
 
   const images = {
-    "Food":food,
-    "Artist":artist,
-    "Book":book,
-    "City":city,
-    "Movie":movie,
-    "Political Subject":political_subject
-  } as any
+    "Food": food,
+    "Artist": artist,
+    "Book": book,
+    "City": city,
+    "Movie": movie,
+    "Political Subject": political_subject,
+    "Errands": errands,
+    "Partner": partner,
+    "Friends": friends,
+    "Restaurant": restaurant,
+    "Dating": dating,
+    "Health Care": healthCare,
+    "Shopping": shopping,
+    "Domestic": domestic,
+    "Work": work,
+  } as any;
+  
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',

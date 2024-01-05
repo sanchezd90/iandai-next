@@ -44,6 +44,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   const [showError,setShowError] = useState(false)
   const [landing, setLanding] = useState(true)
   const {width} = useWindowSize()
+  const [triggerWithoutInput, setTriggerWithoutInput] = useState(false)
 
   const calculateCenter = () => {
     // LoadingAnimation half width is 96px
@@ -63,6 +64,20 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
     },2000)  
   }, []);
 
+  useEffect(() => {
+    if(activeExercise && !activeExercise.activity.requires_user_input && !loadingQuestion){
+      setTriggerWithoutInput(true)
+    }
+  }, [activeExercise]);
+
+  useEffect(() => {
+    if(triggerWithoutInput){
+      setTriggerWithoutInput(false)
+      submitTrigger()
+    }
+  }, [triggerWithoutInput])
+  
+
   const submitTrigger = async () => {
     try {
       setLoadingQuestion(true); 
@@ -70,7 +85,8 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
       const payload = { systemMessageContent: parsePrompt(), userId: '656cdd233b84c3190e8f5cf6', exerciseId: params.exerciseId, languageId: selectedLanguage?._id };
       const response = await apiCall(`${process.env.API_BASE_URL}/api/openai`, 'POST', payload);
       
-      if (response) {             
+      if (response) {
+        console.log(response);             
         if(response.error){
           setShowError(true)
         }else{
@@ -116,6 +132,9 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   const handleRestart = () => {
     setTrigger('');
     setStoredThread(undefined);
+    if(activeExercise && !activeExercise.activity.requires_user_input && !loadingQuestion){
+      setTriggerWithoutInput(true)
+    }
   };
 
   const titleFrameStyle = {
@@ -145,7 +164,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
         </Box>
         {(
           <>
-            {!storedThread && <Box>              
+            {!storedThread && activeExercise?.activity.requires_user_input && <Box>              
               <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5} sx={{opacity:loadingQuestion?'0':'1',transition: 'opacity 0.5s ease-in, opacity 0.25s ease-out'}}>
                 <label htmlFor="trigger">
                   <Typography variant='h6'>Which {activeExercise.name.toLowerCase()} do you want to talk about?</Typography>

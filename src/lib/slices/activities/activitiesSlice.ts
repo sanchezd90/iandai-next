@@ -8,7 +8,8 @@ export interface Activity {
     name:string,    
     instructions:string,
     responseTemplate:string,
-    exercises:Array<Exercise>
+    exercises:Array<Exercise>,
+    requires_user_input:boolean
 }
 export interface Exercise {  
     _id:string,
@@ -38,7 +39,7 @@ export const activitySlice = createSlice({
         state.activities = action.payload
         state.loading = false
     },   
-    updateActiveExercise: (state, action: PayloadAction<Exercise>) => {
+    updateActiveExercise: (state, action: PayloadAction<Exercise|null>) => {
         state.activeExercise = action.payload
         state.loading = false
     },   
@@ -78,6 +79,16 @@ export function getExercise(exerciseId:string) {
     } catch (error) {
       dispatch(updateLoading(false))
       console.error('Error fetching activities:', error);
+      throw error; // Handle the error as needed
+    }    
+  };
+}
+export function resetActiveExercise() {
+  return async (dispatch: Dispatch) => {
+    try {      
+      dispatch(updateActiveExercise(null))      
+    } catch (error) {   
+      console.error('Error updating active exercise:', error);
       throw error; // Handle the error as needed
     }    
   };

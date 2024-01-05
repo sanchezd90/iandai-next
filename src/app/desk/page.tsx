@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ExerciseGrid } from '../ExerciseGrid';
 import {Box, CircularProgress, useMediaQuery} from '@mui/material';
 import { useDispatch, useSelector } from '../../../src/lib/store';
-import { getActivityList, selectActivities } from '@/lib/slices/activities/activitiesSlice';
+import { getActivityList, resetActiveExercise, selectActivities } from '@/lib/slices/activities/activitiesSlice';
 import { getLanguageList } from '@/lib/slices/languages/languagesSlice';
 import {LoadingAnimation} from '../components/loadingAnimation'
 import useWindowSize from '@/hooks/useWindowSize';
@@ -13,6 +13,7 @@ export default function Desk() {
   const { activities, loading } = useSelector(selectActivities);
   const [landing, setLanding] = useState(true)
   useEffect(() => {
+    dispatch(resetActiveExercise())
     dispatch(getActivityList())
     dispatch(getLanguageList());
     setTimeout(()=>{
