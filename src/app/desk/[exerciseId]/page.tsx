@@ -80,19 +80,18 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   
 
   const submitTrigger = async () => {
+    setShowError(false)
     try {
       setLoadingQuestion(true); 
 
       const payload = { systemMessageContent: parsePrompt(), userId: '656cdd233b84c3190e8f5cf6', exerciseId: params.exerciseId, languageId: selectedLanguage?._id };
       const response = await apiCall(`${process.env.API_BASE_URL}/api/openai`, 'POST', payload);
       
-      if (response) {
-        console.log(response);             
+      if (response) {                     
         if(response.error){
           setShowError(true)
         }else{
-          setStoredThread(response);
-          setShowError(false)
+          setStoredThread(response);          
         }
       }
     } catch (error) {
@@ -132,6 +131,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
 
   const handleRestart = () => {
     setTrigger('');
+    setUserReply('')
     setStoredThread(undefined);
     if(activeExercise && !activeExercise.activity.requires_user_input && !loadingQuestion){
       setTriggerWithoutInput(true)
@@ -209,10 +209,10 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                   minRows={6}                  
                 />
                 <Box display='flex' gap={2}>
+                  <Button variant="outlined" onClick={handleRestart} disabled={loadingReply}>Restart</Button>
                 <Button variant="outlined" onClick={handleUserReply} disabled={!userReply || loadingReply}>
                   {loadingReply ? <CircularProgress size={20} color="inherit" /> : 'Submit Reply'}
                 </Button>
-                  <Button variant="outlined" onClick={handleRestart} disabled={loadingReply}>Restart</Button>
                 </Box>
               </Box>
             )}
