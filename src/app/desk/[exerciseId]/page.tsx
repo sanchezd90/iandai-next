@@ -11,6 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { splitStringByNumberDot } from "@/utils/desk/common";
 import { LoadingAnimation } from "@/app/components/loadingAnimation";
 import useWindowSize from "@/hooks/useWindowSize";
+import { ErrorMessage } from "./ErrorMessage";
 
 
 type ApiResponseType = {
@@ -175,14 +176,14 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                   onChange={(e) => setTrigger(e.target.value)}
                   style={{marginTop:10,marginBottom:20, width:'400px'}}
                 />
-                {showError && <Typography marginY={2}>Sorry! <span style={{fontWeight:600}}>IAndAI</span> has had a rough day and failed to generate a proper response.</Typography>}
                 <Button variant="outlined" color="primary" onClick={submitTrigger} disabled={loadingQuestion}>
                   {showError?'Try again':'Continue'}
                 </Button>
               </Box>              
             </Box>            
             }
-
+            {showError && <ErrorMessage action={submitTrigger} disabled={loadingQuestion}/>
+            }
             {storedThread?.messages &&
               storedThread.messages.filter(m => m.role !== 'system').map((message: any) => {
                 return (
