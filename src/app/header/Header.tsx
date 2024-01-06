@@ -21,10 +21,10 @@ export const Header = () => {
     <AppBar position="static" color='transparent'>
       <Container>
         <Toolbar>          
-          <Box style={{cursor:'pointer'}} onClick={()=>router.push('/desk')}>
+          <Box style={{cursor:'pointer'}} onClick={()=>router.push('/')}>
             <Image src='/logo-solid.svg' alt='logo' width={35} height={30}/>
           </Box>
-          <Box style={{cursor:'pointer'}} onClick={()=>router.push('/desk')}>
+          <Box style={{cursor:'pointer'}} onClick={()=>router.push('/')}>
             <Image src='/logo-words.svg' alt='logo' width={100} height={25}/>
           </Box>
           <Box style={{marginLeft: 'auto'}} display={'flex'} alignItems={'center'} zIndex={2}>

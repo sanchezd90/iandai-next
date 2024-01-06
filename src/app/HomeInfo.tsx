@@ -22,10 +22,7 @@ export const HomeInfo = () => {
         letterSpacing={0.5}
         lineHeight={1.3}
       >
-        Unlock the power of seamless language practice with{" "}
-        <span style={{ fontWeight: 600 }}>IAndAI</span>, the innovative app
-        designed to elevate your{" "}
-        <span style={{ fontWeight: 600 }}>conversation and writing skills</span>.        
+        Choose a topic from our diverse list and engage in a dynamic conversation with <span style={{ fontWeight: 600 }}>IAndAI</span>.  It helps you with grammar and spelling, so you can practice talking without needing another person. Learn languages on your own, get better at talking, and have fun!        
       </Typography>
       </>:<Typography
         variant="h5"
@@ -34,13 +31,7 @@ export const HomeInfo = () => {
         letterSpacing={0.5}
         lineHeight={1.3}
       >
-        Unlock the power of seamless language practice with{" "}
-        <span style={{ fontWeight: 600 }}>IAndAI</span>, the innovative app
-        designed to elevate your{" "}
-        <span style={{ fontWeight: 600 }}>conversation and writing skills</span>
-        . Whether you&apos;re a beginner or aiming for fluency, our AI chat is
-        here to guide you through dynamic interactions, making language learning
-        a breeze.
+        Choose a topic from our diverse list and engage in a dynamic conversation with <span style={{ fontWeight: 600 }}>IAndAI</span>.  It helps you with grammar and spelling, so you can practice talking without needing another person. Learn languages on your own, get better at talking, and have fun!
       </Typography>}
     </div>
   );
