@@ -22,7 +22,7 @@ export const HomeInfo = () => {
         letterSpacing={0.5}
         lineHeight={1.3}
       >
-        Choose a topic from our diverse list and engage in a dynamic conversation with <span style={{ fontWeight: 600 }}>IAndAI</span>.  It helps you with grammar and spelling, so you can practice talking without needing another person. Learn languages on your own, get better at talking, and have fun!        
+        Choose an activity from our diverse list and engage in a dynamic conversation with <span style={{ fontWeight: 600 }}>IAndAI</span>.  It helps you with grammar and spelling, so you can practice talking without needing another person. Learn languages on your own, get better at talking, and have fun!        
       </Typography>
       </>:<Typography
         variant="h5"
@@ -31,7 +31,7 @@ export const HomeInfo = () => {
         letterSpacing={0.5}
         lineHeight={1.3}
       >
-        Choose a topic from our diverse list and engage in a dynamic conversation with <span style={{ fontWeight: 600 }}>IAndAI</span>.  It helps you with grammar and spelling, so you can practice talking without needing another person. Learn languages on your own, get better at talking, and have fun!
+        Choose an activity from our diverse list and engage in a dynamic conversation with <span style={{ fontWeight: 600 }}>IAndAI</span>.  It helps you with grammar and spelling, so you can practice talking without needing another person. Learn languages on your own, get better at talking, and have fun!
       </Typography>}
     </div>
   );
