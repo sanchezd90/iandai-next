@@ -164,7 +164,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
           <Typography variant="h4">{activeExercise.activity.name}: {activeExercise.name}</Typography>
         </Box>
         {(
-          <>
+          <Box paddingBottom={2}>
             {!storedThread && activeExercise?.activity.requires_user_input && <Box>              
               <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5} sx={{opacity:loadingQuestion?'0':'1',transition: 'opacity 0.5s ease-in, opacity 0.25s ease-out'}}>
                 <label htmlFor="trigger">
@@ -174,7 +174,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                   id="trigger"
                   value={trigger}
                   onChange={(e) => setTrigger(e.target.value)}
-                  style={{marginTop:10,marginBottom:20, width:'400px'}}
+                  style={{marginTop:10,marginBottom:20, width:(width && width<668)?'90%':'400px'}}
                 />
                 <Button variant="outlined" color="primary" onClick={submitTrigger} disabled={loadingQuestion}>
                   {showError?'Try again':'Continue'}
@@ -204,7 +204,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                   id="userReply"
                   value={userReply}
                   onChange={(e) => setUserReply(e.target.value)}
-                  style={{marginTop:10,marginBottom:20, width:'400px'}}
+                  style={{marginTop:10,marginBottom:20, width:(width && width<668)?'90%':'400px'}}
                   multiline
                   minRows={6}                  
                 />
@@ -219,7 +219,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
             {storedThread?.messages && storedThread?.messages.length ===4 && <Box display={'flex'} justifyContent={'center'} marginBottom={4}>
               <Button variant="outlined" onClick={handleRestart}>Restart</Button>        
             </Box>}
-          </>          
+          </Box>          
         )}
         <Box display='flex' position='absolute' left={calculateCenter()} top='20vh' zIndex={-1} sx={{opacity:(loadingQuestion||loadingReply)?'1':'0',transition: 'opacity 0.5s ease-in, opacity 0.1s ease-out'}}><LoadingAnimation/></Box>
       </Box>:
