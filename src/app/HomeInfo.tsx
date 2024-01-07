@@ -1,47 +1,52 @@
 "use client";
-import { Typography, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
+import { LandingMainAnimation } from "./components/landingMain";
+import { StartButton } from "./StartButton";
+import useWindowSize from "@/hooks/useWindowSize";
 
 export const HomeInfo = () => {
   const isExtraSmallScreen = useMediaQuery((theme: any) =>
     theme.breakpoints.down("mobile")
   );
+  const isSmallScreen = useMediaQuery((theme: any) =>
+    theme.breakpoints.down("tablet")
+  );
+  const isMediumScreen = useMediaQuery((theme: any) =>
+    theme.breakpoints.down("laptop")
+  );
+  const {width} = useWindowSize()
+  const animationSize = () => {
+    if(!width) return 0
+    if(width>1020) return width/3
+    if(width>770) return width/2.5
+    if(width>480) return width/2
+    return width/1.5
+  }
+  const headerVariant = () => {
+    if(!width) return 'h4'
+    if(width>1020) return 'h4'
+    return 'h5'    
+  }
   return (
-    <div>
-      {!isExtraSmallScreen && (
-        <Typography variant="h4" textAlign={"center"}>
-          Introducing <span style={{ fontWeight: 600 }}>IAndAI</span>: Your
-          Ultimate Language Learning Companion
+    <Box display={'flex'} flexDirection={isSmallScreen?'column':'row'} justifyContent={isSmallScreen?'':'space-between'} alignItems={'center'}>
+      <Box>
+        <LandingMainAnimation size={animationSize()}/>
+      </Box>
+      <Box width={isSmallScreen?'75%':'30vw'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} gap={3}>              
+          <Typography
+          variant={headerVariant()}
+          fontWeight={600}
+          marginTop={2}
+          textAlign={"center"}
+          letterSpacing={0.5}
+          lineHeight={1.3}
+          style={{opacity:0.9}}
+        >
+          Practice foreign language speaking without relying on a conversation partner
         </Typography>
-      )}
-      {isExtraSmallScreen ?<>
-        <Typography
-        variant="h5"
-        
-        textAlign={"center"}
-        letterSpacing={0.5}
-        lineHeight={1.3}
-      >
-        With <span style={{ fontWeight: 600 }}>IAndAI</span> you can practice talking foreign languages without needing another person.
-      </Typography>
-        <Typography
-        variant="h5"
-        marginTop={2}
-        textAlign={"center"}
-        letterSpacing={0.5}
-        lineHeight={1.3}
-      >
-        Choose an activity from our diverse list and engage in a dynamic conversation with <span style={{ fontWeight: 600 }}>IAndAI</span>.
-      </Typography>
-      </>:<Typography
-        variant="h5"
-        marginTop={6}
-        textAlign={"center"}
-        letterSpacing={0.5}
-        lineHeight={1.3}
-      >
-        <span style={{ fontWeight: 600 }}>IAndAI</span> helps you with grammar and spelling, so you can practice talking without needing another person. Choose an activity from our diverse list and engage in a dynamic conversation with <span style={{ fontWeight: 600 }}>IAndAI</span>. Learn languages on your own, get better at talking, and have fun!
-      </Typography>}
-    </div>
+        <StartButton/>
+      </Box>
+    </Box>
   );
 };
