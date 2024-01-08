@@ -28,6 +28,11 @@ import healthCare from 'public/images/buttons/health-care.jpg';
 import shopping from 'public/images/buttons/shopping.jpg';
 import domestic from 'public/images/buttons/domestic.jpg';
 import work from 'public/images/buttons/work.jpg';
+import objects from 'public/images/buttons/objects.jpg';
+import feelings from 'public/images/buttons/feelings.jpg';
+import directions from 'public/images/buttons/directions.jpg';
+import places from 'public/images/buttons/places.jpg';
+import traits from 'public/images/buttons/traits.jpg';
 
 
 export const ExerciseGrid = ({activity}:{activity:Activity}) => {  
@@ -52,6 +57,11 @@ export const ExerciseGrid = ({activity}:{activity:Activity}) => {
     "Shopping": shopping,
     "Domestic": domestic,
     "Work": work,
+    "Objects": objects,
+    "Feelings": feelings,
+    "Directions": directions,
+    "Places": places,
+    "Traits": traits,
   } as any;
   
 
