@@ -24,10 +24,10 @@ export interface LanguageState {
 const initialState: LanguageState = {
   languages: [],
   selectedLanguage: {
-    "_id": "656cdcaf8cba1818ac07f401",
-    "name": "German",
+    "_id": "656cdbec8cba1818ac07f3fe",
+    "name": "English",
     "__v": 0,
-    "code": "DE"
+    "code": "GB"
 }
 }
 
