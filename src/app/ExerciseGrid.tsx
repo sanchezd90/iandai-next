@@ -39,6 +39,12 @@ import commuting from 'public/images/buttons/commuting.jpg';
 import phoneUsage from 'public/images/buttons/phone-usage.jpg';
 import cooking from 'public/images/buttons/cooking.jpg';
 import morningRoutine from 'public/images/buttons/morning-routine.jpg';
+import yourEarlyYears from 'public/images/buttons/your_early_years.jpg';
+import yourHobbies from 'public/images/buttons/your_hobbies.jpg';
+import yourRecentLife from 'public/images/buttons/your_recent_life.jpg';
+import yourHometown from 'public/images/buttons/your_hometown.jpg';
+import yourProfession from 'public/images/buttons/your_profession.jpg';
+import yourDay from 'public/images/buttons/your_day.jpg';
 
 
 
@@ -75,6 +81,12 @@ export const ExerciseGrid = ({activity}:{activity:Activity}) => {
     "Phone usage": phoneUsage,
     "Cooking": cooking,
     "Morning routine": morningRoutine,
+    "Your early years": yourEarlyYears,    
+    "Your hobbies": yourHobbies,
+    "Your recent life": yourRecentLife,
+    "Your hometown": yourHometown,
+    "Your profession": yourProfession,
+    "Your day": yourDay,
   } as any;
   
 
