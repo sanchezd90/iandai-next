@@ -203,7 +203,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
 
             {/* Display user input box only if there is a second message */}
             {storedThread?.messages && storedThread?.messages.length > 1 && storedThread?.messages.length < 4 && !loadingReply && (
-              <Box display={'flex'} justifyContent='center' alignItems={'center'} gap={2}>
+              <Box display={'flex'} flexDirection={(width??0)<668?'column':'row'} justifyContent={showHelp?'space-around':'center'} alignItems={'center'} gap={2}>
                 <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5} sx={{opacity:loadingQuestion?'0':'1',transition: 'opacity 0.5s ease-in, opacity 0.25s ease-out'}}>                                                
                   <label htmlFor="userReply">
                   <Typography variant='h6'>Reply to <span style={{fontWeight:600}}>IAndAI</span></Typography>
@@ -223,11 +223,11 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
                   </Button>
                   </Box>
                 </Box>
-                <Box display={'none'} gap={1} alignItems={'center'}>                    
+                {!showHelp && <Box display={'flex'} gap={1} alignItems={'center'}>                    
                     <Icon icon='simple-icons:answer' onClick={handleShowHelp} style={{cursor:'pointer'}}/>                    
                     <Typography variant='subtitle1' onClick={handleShowHelp} style={{cursor:'pointer'}}>Help</Typography>
-                </Box>
-                <HelpModule display={showHelp} givenQuestion={storedThread?.messages?.[1]?.content}/>
+                </Box>}
+                <HelpModule display={showHelp} givenQuestion={storedThread?.messages?.[1]?.content} close={handleShowHelp}/>
               </Box>
             )}
             {storedThread?.messages && storedThread?.messages.length ===4 && <Box display={'flex'} justifyContent={'center'} marginBottom={4}>

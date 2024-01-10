@@ -16,3 +16,11 @@
         margin:0px 20px;
       }
   }
+
+.closing-icon {
+  font-size:1.5rem
+}
+.closing-icon:hover {
+  font-size:2rem;
+  transform:translate(0.25rem,-0.25rem)
+}
