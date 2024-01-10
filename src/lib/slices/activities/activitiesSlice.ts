@@ -2,6 +2,11 @@ import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit'
 import type { RootState } from '../../store'
 import axios from 'axios'
 
+export interface ActivityTools {
+  help:string,
+  words:string
+}
+
 // Define a type for the slice state
 export interface Activity {  
     _id:string,
@@ -9,7 +14,8 @@ export interface Activity {
     instructions:string,
     responseTemplate:string,
     exercises:Array<Exercise>,
-    requires_user_input:boolean
+    requires_user_input:boolean,
+    tools:ActivityTools
 }
 export interface Exercise {  
     _id:string,

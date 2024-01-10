@@ -12,6 +12,8 @@ import { splitStringByNumberDot } from "@/utils/desk/common";
 import { LoadingAnimation } from "@/app/components/loadingAnimation";
 import useWindowSize from "@/hooks/useWindowSize";
 import { ErrorMessage } from "./ErrorMessage";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { HelpModule } from "./HelpModule";
 
 
 type ApiResponseType = {
@@ -46,6 +48,7 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
   const [landing, setLanding] = useState(true)
   const {width} = useWindowSize()
   const [triggerWithoutInput, setTriggerWithoutInput] = useState(false)
+  const [showHelp, setShowHelp] = useState<boolean>(false)
 
   const calculateCenter = () => {
     // LoadingAnimation half width is 96px
@@ -120,7 +123,11 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
     } finally {
       setLoadingReply(false); // Set loading state back to false after submission
     }
-  };
+  };  
+
+  const handleShowHelp = () => {
+    setShowHelp(!showHelp)
+  }
 
   const parsePrompt = () => {
     let prompt = activeExercise?.systemPrompt
@@ -196,24 +203,31 @@ export default function Exercise({ params }: { params: ExerciseParams }) {
 
             {/* Display user input box only if there is a second message */}
             {storedThread?.messages && storedThread?.messages.length > 1 && storedThread?.messages.length < 4 && !loadingReply && (
-              <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5} sx={{opacity:loadingQuestion?'0':'1',transition: 'opacity 0.5s ease-in, opacity 0.25s ease-out'}}>              
-                <label htmlFor="userReply">
-                <Typography variant='h6'>Reply to <span style={{fontWeight:600}}>IAndAI</span></Typography>
-                </label>
-                <TextField
-                  id="userReply"
-                  value={userReply}
-                  onChange={(e) => setUserReply(e.target.value)}
-                  style={{marginTop:10,marginBottom:20, width:(width && width<668)?'90%':'400px'}}
-                  multiline
-                  minRows={6}                  
-                />
-                <Box display='flex' gap={2}>
-                  <Button variant="outlined" onClick={handleRestart} disabled={loadingReply}>Restart</Button>
-                <Button variant="outlined" onClick={handleUserReply} disabled={!userReply || loadingReply}>
-                  {loadingReply ? <CircularProgress size={20} color="inherit" /> : 'Submit Reply'}
-                </Button>
+              <Box display={'flex'} justifyContent='center' alignItems={'center'} gap={2}>
+                <Box display={'flex'} flexDirection={'column'} alignItems={'center'} marginTop={5} sx={{opacity:loadingQuestion?'0':'1',transition: 'opacity 0.5s ease-in, opacity 0.25s ease-out'}}>                                                
+                  <label htmlFor="userReply">
+                  <Typography variant='h6'>Reply to <span style={{fontWeight:600}}>IAndAI</span></Typography>
+                  </label>
+                  <TextField
+                    id="userReply"
+                    value={userReply}
+                    onChange={(e) => setUserReply(e.target.value)}
+                    style={{marginTop:10,marginBottom:20, width:(width && width<668)?'90%':'400px'}}
+                    multiline
+                    minRows={6}                  
+                  />                                                    
+                  <Box display='flex' gap={2}>
+                    <Button variant="outlined" onClick={handleRestart} disabled={loadingReply}>Restart</Button>
+                  <Button variant="outlined" onClick={handleUserReply} disabled={!userReply || loadingReply}>
+                    {loadingReply ? <CircularProgress size={20} color="inherit" /> : 'Submit Reply'}
+                  </Button>
+                  </Box>
                 </Box>
+                <Box display={'none'} gap={1} alignItems={'center'}>                    
+                    <Icon icon='simple-icons:answer' onClick={handleShowHelp} style={{cursor:'pointer'}}/>                    
+                    <Typography variant='subtitle1' onClick={handleShowHelp} style={{cursor:'pointer'}}>Help</Typography>
+                </Box>
+                <HelpModule display={showHelp} givenQuestion={storedThread?.messages?.[1]?.content}/>
               </Box>
             )}
             {storedThread?.messages && storedThread?.messages.length ===4 && <Box display={'flex'} justifyContent={'center'} marginBottom={4}>
