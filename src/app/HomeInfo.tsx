@@ -42,6 +42,7 @@ export const HomeInfo = () => {
           letterSpacing={0.5}
           lineHeight={1.3}
           style={{opacity:0.9}}
+          color={'rgb(67, 67, 82)'}
         >
           Practice foreign language speaking without relying on a conversation partner
         </Typography>
