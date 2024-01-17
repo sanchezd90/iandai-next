@@ -39,7 +39,7 @@ The source code is organized into the following folders:
 - services: Modules for handling API calls and other external services.
 - utils: Utility functions and helper modules.
 - fonts: Font files for the application.
-- lib: External libraries and configurations.
+- lib: Redux store and slices
 - theme: Styling themes and configurations.
 
 ## How it Works
