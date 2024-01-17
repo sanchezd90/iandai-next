@@ -1,37 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# IANDAI
 
-## Getting Started
+## Overview
+IANDAI is a language learning tool designed to enhance written language skills through interactive AI chat sessions. This application leverages various technologies for styling, state management, and API calls to provide a seamless and engaging language learning experience.
 
-First, run the development server:
+## Installation
+Before getting started, make sure you have Node.js installed on your machine.
+
+Run the following command to install dependencies:
+
+```bash
+npm install
+```
+
+### Usage
+To run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To build the application:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To start the application in production mode:
 
-## Learn More
+```bash
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
+The source code is organized into the following folders:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- app: Contains the main components and logic for the application.
+- hooks: Custom React hooks used throughout the application.
+- services: Modules for handling API calls and other external services.
+- utils: Utility functions and helper modules.
+- fonts: Font files for the application.
+- lib: External libraries and configurations.
+- theme: Styling themes and configurations.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## How it Works
+### Styling
+The application utilizes Emotion for styling, with @emotion/react and @emotion/styled as dependencies. Emotion provides a convenient way to write and manage styles in JavaScript, enhancing the modularity and maintainability of the codebase.
 
-## Deploy on Vercel
+### State Management
+State management is handled through Redux and Redux Toolkit. Dependencies such as react-redux and @reduxjs/toolkit are included. Redux allows for a centralized store, enabling efficient state handling and communication between components. Redux Toolkit simplifies the setup and reduces boilerplate code.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# iandai-next
+### API Calls
+API calls are managed using the axios library. This dependency facilitates making HTTP requests, allowing the application to interact with external services seamlessly. The services folder encapsulates modules responsible for handling API calls and other external services.
