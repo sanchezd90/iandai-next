@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 import SectionTitle from './SectionTitle';
 import Image from 'next/image';
 
-export const ExerciseGrid = ({activity}:{activity:Activity}) => {  
+export const ExerciseGrid = ({activity, activityIndex}:{activity:Activity, activityIndex:number}) => {  
   const router = useRouter()  
   const { selectedLanguage } = useSelector(selectLanguages);
   const isSmallScreen = useMediaQuery((theme:any) => theme.breakpoints.down('tablet'));
@@ -129,7 +129,7 @@ const handleClick = (id:string) => {
     <section>
       <SectionTitle title={activity.name} instructions={activity.instructions}/>            
       <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
-      {selectedLanguage && activity.exercises.map((exercise,index) => (
+      {selectedLanguage && activity.exercises.map((exercise) => (
         <ImageButton
           focusRipple
           key={exercise._id}
@@ -141,7 +141,9 @@ const handleClick = (id:string) => {
           <ImageSrc
             src={images[exercise.name]}
             alt={exercise.name}          
-            priority={index===0}
+            priority={activityIndex===0}
+            fill
+            sizes={isExtraSmallScreen?'100vw':isSmallScreen?'50vw':'33.33vw'}
           />
           <ImageBackdrop className="MuiImageBackdrop-root" />
           <ImageX>

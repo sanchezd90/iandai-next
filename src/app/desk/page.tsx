@@ -37,8 +37,8 @@ export default function Desk() {
     <Box marginTop={8} position={'relative'}>
       <Box display='flex' position='absolute' left={calculateCenter()} top='20vh' zIndex={-1} sx={{opacity:(loading || landing)?'1':'0',transition: 'opacity 0.5s ease-in, opacity 0.1s ease-out'}}><LoadingAnimation/></Box>                 
       <Box marginY={6} sx={{opacity:(loading || landing)?'0':'1',transition: 'opacity 0.5s ease-in, opacity 0.25s ease-out'}}>        
-          {(!loading && !landing) && activities.map(activity=>{
-            return <ExerciseGrid key={activity._id} activity={activity}/>
+          {(!loading && !landing) && activities.map((activity,index)=>{
+            return <ExerciseGrid key={activity._id} activity={activity} activityIndex={index}/>
           })}        
       </Box>
     </Box>
