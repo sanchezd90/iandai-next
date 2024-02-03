@@ -13,40 +13,7 @@ import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import { useRouter } from 'next/navigation';
 import SectionTitle from './SectionTitle';
-import food from 'public/images/buttons/food.jpg';
-import artist from 'public/images/buttons/artist.jpg';
-import book from 'public/images/buttons/book.jpg';
-import city from 'public/images/buttons/city.jpg';
-import movie from 'public/images/buttons/movie.jpg';
-import political_subject from 'public/images/buttons/political_subject.jpg';
-import errands from 'public/images/buttons/errands.jpg';
-import partner from 'public/images/buttons/partner.jpg';
-import friends from 'public/images/buttons/friends.jpg';
-import restaurant from 'public/images/buttons/restaurant.jpg';
-import dating from 'public/images/buttons/dating.jpg';
-import healthCare from 'public/images/buttons/health-care.jpg';
-import shopping from 'public/images/buttons/shopping.jpg';
-import domestic from 'public/images/buttons/domestic.jpg';
-import work from 'public/images/buttons/work.jpg';
-import objects from 'public/images/buttons/objects.jpg';
-import feelings from 'public/images/buttons/feelings.jpg';
-import directions from 'public/images/buttons/directions.jpg';
-import places from 'public/images/buttons/places.jpg';
-import traits from 'public/images/buttons/traits.jpg';
-import payments from 'public/images/buttons/payments.jpg';
-import groceryShopping from 'public/images/buttons/grocery-shopping.jpg';
-import commuting from 'public/images/buttons/commuting.jpg';
-import phoneUsage from 'public/images/buttons/phone-usage.jpg';
-import cooking from 'public/images/buttons/cooking.jpg';
-import morningRoutine from 'public/images/buttons/morning-routine.jpg';
-import yourEarlyYears from 'public/images/buttons/your_early_years.jpg';
-import yourHobbies from 'public/images/buttons/your_hobbies.jpg';
-import yourRecentLife from 'public/images/buttons/your_recent_life.jpg';
-import yourHometown from 'public/images/buttons/your_hometown.jpg';
-import yourProfession from 'public/images/buttons/your_profession.jpg';
-import yourDay from 'public/images/buttons/your_day.jpg';
-
-
+import Image from 'next/image';
 
 export const ExerciseGrid = ({activity}:{activity:Activity}) => {  
   const router = useRouter()  
@@ -55,38 +22,38 @@ export const ExerciseGrid = ({activity}:{activity:Activity}) => {
   const isExtraSmallScreen = useMediaQuery((theme:any) => theme.breakpoints.down('mobile'));
 
   const images = {
-    "Food": food,
-    "Artist": artist,
-    "Book": book,
-    "City": city,
-    "Movie": movie,
-    "Political Subject": political_subject,
-    "Errands": errands,
-    "Partner": partner,
-    "Friends": friends,
-    "Restaurant": restaurant,
-    "Dating": dating,
-    "Health Care": healthCare,
-    "Shopping": shopping,
-    "Domestic": domestic,
-    "Work": work,
-    "Objects": objects,
-    "Feelings": feelings,
-    "Directions": directions,
-    "Places": places,
-    "Traits": traits,
-    "Payments": payments,
-    "Grocery shopping": groceryShopping,
-    "Commuting": commuting,
-    "Phone usage": phoneUsage,
-    "Cooking": cooking,
-    "Morning routine": morningRoutine,
-    "Your early years": yourEarlyYears,    
-    "Your hobbies": yourHobbies,
-    "Your recent life": yourRecentLife,
-    "Your hometown": yourHometown,
-    "Your profession": yourProfession,
-    "Your day": yourDay,
+    "Food": '/images/buttons/food.jpg',
+    "Artist": '/images/buttons/artist.jpg',
+    "Book": '/images/buttons/book.jpg',
+    "City": '/images/buttons/city.jpg',
+    "Movie": '/images/buttons/movie.jpg',
+    "Political Subject": '/images/buttons/political_subject.jpg',
+    "Errands": '/images/buttons/errands.jpg',
+    "Partner": '/images/buttons/partner.jpg',
+    "Friends": '/images/buttons/friends.jpg',
+    "Restaurant": '/images/buttons/restaurant.jpg',
+    "Dating": '/images/buttons/dating.jpg',
+    "Health Care": '/images/buttons/health-care.jpg',
+    "Shopping": '/images/buttons/shopping.jpg',
+    "Domestic": '/images/buttons/domestic.jpg',
+    "Work": '/images/buttons/work.jpg',
+    "Objects": '/images/buttons/objects.jpg',
+    "Feelings": '/images/buttons/feelings.jpg',
+    "Directions": '/images/buttons/directions.jpg',
+    "Places": '/images/buttons/places.jpg',
+    "Traits": '/images/buttons/traits.jpg',
+    "Payments": '/images/buttons/payments.jpg',
+    "Grocery shopping": '/images/buttons/grocery-shopping.jpg',
+    "Commuting": '/images/buttons/commuting.jpg',
+    "Phone usage": '/images/buttons/phone-usage.jpg',
+    "Cooking": '/images/buttons/cooking.jpg',
+    "Morning routine": '/images/buttons/morning-routine.jpg',
+    "Your early years": '/images/buttons/your_early_years.jpg',
+    "Your hobbies": '/images/buttons/your_hobbies.jpg',
+    "Your recent life": '/images/buttons/your_recent_life.jpg',
+    "Your hometown": '/images/buttons/your_hometown.jpg',
+    "Your profession": '/images/buttons/your_profession.jpg',
+    "Your day": '/images/buttons/your_day.jpg',
   } as any;
   
 
@@ -112,14 +79,13 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
 }));
 
 
-const ImageSrc = styled('span')({
+const ImageSrc = styled(Image)({
   position: 'absolute',
   left: 0,
   right: 0,
   top: 0,
   bottom: 0,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center 40%',
+  objectFit:'cover'
 });
 
 const ImageX = styled('span')(({ theme }) => ({
@@ -163,7 +129,7 @@ const handleClick = (id:string) => {
     <section>
       <SectionTitle title={activity.name} instructions={activity.instructions}/>            
       <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
-      {selectedLanguage && activity.exercises.map((exercise) => (
+      {selectedLanguage && activity.exercises.map((exercise,index) => (
         <ImageButton
           focusRipple
           key={exercise._id}
@@ -172,7 +138,11 @@ const handleClick = (id:string) => {
           }}
           onClick={()=>handleClick(exercise._id)}
         >
-          <ImageSrc style={{ backgroundImage: `url(${images[exercise.name]?.src})`}} />
+          <ImageSrc
+            src={images[exercise.name]}
+            alt={exercise.name}          
+            priority={index===0}
+          />
           <ImageBackdrop className="MuiImageBackdrop-root" />
           <ImageX>
             <Typography
