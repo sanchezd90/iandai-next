@@ -14,8 +14,8 @@ import LoginLogoutButton from '../components/LoginLogoutButton';
 export const Header = () => {
   const { selectedLanguage } = useSelector(selectLanguages);
   const router = useRouter();
-  const isExtraSmallScreen = useMediaQuery((theme: any) =>
-  theme.breakpoints.down("mobile")
+  const isSmallScreen = useMediaQuery((theme: any) =>
+  theme.breakpoints.down("tablet")
 );
 
   return (
@@ -31,7 +31,7 @@ export const Header = () => {
           <Box style={{marginLeft: 'auto'}} display={'flex'} zIndex={2} gap={2}>
             <LoginLogoutButton/>
             <Box display={'flex'} alignItems={'center'}>
-              <Typography variant='h6'>{!isExtraSmallScreen && 'Practice:'} {selectedLanguage?.name}</Typography>
+              <Typography variant='h6'>{!isSmallScreen && 'Practice:'} {selectedLanguage?.name}</Typography>
               <LanguageSelect/>
             </Box>
           </Box>          
