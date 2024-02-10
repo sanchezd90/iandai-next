@@ -4,6 +4,8 @@ import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 // // slices
 import activitiesSliceReducer from './slices/activities/activitiesSlice';
 import languagesSliceReducer from './slices/languages/languagesSlice';
+import chatsSliceReducer from './slices/chats/chatsSlice';
+import authSliceReducer from './slices/auth/authSlice';
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +41,8 @@ export const productPersistConfig = {
 const rootReducer = combineReducers({
    activities: activitiesSliceReducer,
    languages: languagesSliceReducer,
+   chats: chatsSliceReducer,
+   auth: authSliceReducer
 });
 
 export default rootReducer;
