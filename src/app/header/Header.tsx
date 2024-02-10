@@ -7,6 +7,7 @@ import { useSelector } from '../../lib/store';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { LanguageSelect } from './LanguageSelect';
+import LoginLogoutButton from '../components/LoginLogoutButton';
 
 // Import SVG flag icons
 
@@ -27,9 +28,12 @@ export const Header = () => {
           <Box style={{cursor:'pointer'}} onClick={()=>router.push('/')}>
             <Image src='/logo-words.svg' alt='logo' width={100} height={25}/>
           </Box>
-          <Box style={{marginLeft: 'auto'}} display={'flex'} alignItems={'center'} zIndex={2}>
-            <Typography variant='h6'>{!isExtraSmallScreen && 'Practice:'} {selectedLanguage?.name}</Typography>
-            <LanguageSelect/>
+          <Box style={{marginLeft: 'auto'}} display={'flex'} zIndex={2} gap={2}>
+            <LoginLogoutButton/>
+            <Box display={'flex'} alignItems={'center'}>
+              <Typography variant='h6'>{!isExtraSmallScreen && 'Practice:'} {selectedLanguage?.name}</Typography>
+              <LanguageSelect/>
+            </Box>
           </Box>          
         </Toolbar>
       </Container>
