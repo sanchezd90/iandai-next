@@ -1,6 +1,6 @@
 'use client'
 import { Player } from '@lottiefiles/react-lottie-player';
-import Welcome from '../../../public/resources/welcome.json'
+import Welcome from '../../../../public/resources/welcome.json'
 import { useEffect, useRef } from 'react';
 
 export const WelcomeAnimation = () => {

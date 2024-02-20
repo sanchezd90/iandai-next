@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import { BackButton } from "./BackButton";
 import CircularProgress from '@mui/material/CircularProgress';
 import { splitStringByNumberDot } from "@/utils/desk/common";
-import { LoadingAnimation } from "@/app/components/loadingAnimation";
+import { LoadingAnimation } from "@/app/[locale]/components/loadingAnimation";
 import useWindowSize from "@/hooks/useWindowSize";
 import { ErrorMessage } from "./ErrorMessage";
 import { Icon } from "@iconify/react/dist/iconify.js";

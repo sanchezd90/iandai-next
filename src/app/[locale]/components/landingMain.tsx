@@ -1,5 +1,5 @@
 import { Player } from '@lottiefiles/react-lottie-player';
-import LandingMain from '../../../public/resources/landingMain.json'
+import LandingMain from '../../../../public/resources/landingMain.json'
 import { Box } from '@mui/material';
 import Image from 'next/image';
 

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { ExerciseGrid } from '../ExerciseGrid';
 import {Box, CircularProgress, useMediaQuery} from '@mui/material';
-import { useDispatch, useSelector } from '../../../src/lib/store';
+import { useDispatch, useSelector } from '../../../lib/store';
 import { getActivityList, resetActiveExercise, selectActivities } from '@/lib/slices/activities/activitiesSlice';
 import { getLanguageList } from '@/lib/slices/languages/languagesSlice';
 import {LoadingAnimation} from '../components/loadingAnimation'

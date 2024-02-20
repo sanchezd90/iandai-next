@@ -5,7 +5,7 @@ import { Box, Typography, useMediaQuery } from '@mui/material';
 import {
   Activity,
 } from '@/lib/slices/activities/activitiesSlice';
-import { useSelector } from '../../src/lib/store';
+import { useSelector } from '../../lib/store';
 import {
   selectLanguages  
 } from '@/lib/slices/languages/languagesSlice';

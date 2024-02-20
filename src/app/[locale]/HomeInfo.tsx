@@ -4,8 +4,10 @@ import React from "react";
 import { LandingMainAnimation } from "./components/landingMain";
 import { StartButton } from "./StartButton";
 import useWindowSize from "@/hooks/useWindowSize";
+import { useIntl } from 'react-intl';
 
-export const HomeInfo = () => {
+export const HomeInfo = () => {  
+  const intl = useIntl();
   const isExtraSmallScreen = useMediaQuery((theme: any) =>
     theme.breakpoints.down("mobile")
   );
@@ -43,7 +45,7 @@ export const HomeInfo = () => {
           lineHeight={1.3}
           style={{opacity:0.9}}
         >
-          Practice foreign language speaking without relying on a conversation partner
+          {intl.formatMessage({ id: 'practice_foreign_language' })}
         </Typography>
         <StartButton/>
       </Box>

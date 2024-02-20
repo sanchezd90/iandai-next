@@ -3,7 +3,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Container, Box, useMediaQuery } from '@mui/material';
 import { selectLanguages } from '@/lib/slices/languages/languagesSlice';
-import { useSelector } from '../../lib/store';
+import { useSelector } from '../../../lib/store';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { LanguageSelect } from './LanguageSelect';
